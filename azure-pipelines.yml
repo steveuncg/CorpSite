@@ -1,4 +1,24 @@
 # Starter pipeline
+- task: ServiceNow-DevOps-Agent-Job-Notification@1
+  inputs:
+    connectedServiceName: 'SN DEV DevOps Connection'
+    upstream: 'Build'
+    Phase: 'STARTED'
+    - task: ServiceNow-DevOps-Agent-Job-Notification@1
+  inputs:
+    connectedServiceName: 'SN DEV DevOps Connection'
+    upstream: 'Build'
+    Phase: 'COMPLETED'
+- task: ServiceNow-DevOps-Agent-Job-Notification@1
+  inputs:
+    connectedServiceName: 'SN DEV DevOps Connection'
+    upstream: 'Test'
+    Phase: 'STARTED'
+- task: ServiceNow-DevOps-Agent-Job-Notification@1
+  inputs:
+    connectedServiceName: 'SN DEV DevOps Connection'
+    upstream: 'Test'
+    Phase: 'COMPLETED'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
