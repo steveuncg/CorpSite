@@ -4,7 +4,7 @@
     connectedServiceName: 'SN DEV DevOps Connection'
     upstream: 'Build'
     Phase: 'STARTED'
-    - task: ServiceNow-DevOps-Agent-Job-Notification@1
+- task: ServiceNow-DevOps-Agent-Job-Notification@1
   inputs:
     connectedServiceName: 'SN DEV DevOps Connection'
     upstream: 'Build'
@@ -13,11 +13,31 @@
   inputs:
     connectedServiceName: 'SN DEV DevOps Connection'
     upstream: 'Test'
-    Phase: 'STARTED'
-- task: ServiceNow-DevOps-Agent-Job-Notification@1
+    Phase: 'COMPLETED'
+- task: ServiceNow-DevOps-Server-Job-Notification@1
   inputs:
     connectedServiceName: 'SN DEV DevOps Connection'
-    upstream: 'Test'
+    UpstreamJob: 'Test'
+    Phase: 'STARTED'
+- task: ServiceNow-DevOps-Server-Change-Acceleration@1
+    inputs:
+      connectedServiceName: 'SN DEV DevOps Connection'
+      UpstreamJob: 'Test'
+      changeRequestDetails: |
+        {
+            "setCloseCode" : true,
+            "attributes": {
+              "requested_by": {
+                "name": "test user"
+              },
+              "start_date": "2021-01-05 08:00:00",
+              "end_date": "2021-01-08 08:00:00"
+            }
+          }
+- task: ServiceNow-DevOps-Server-Job-Notification@1
+  inputs:
+    connectedServiceName: 'SN DEV DevOps Connection'
+    UpstreamJob: 'Test'
     Phase: 'COMPLETED'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
@@ -25,6 +45,10 @@
 
 trigger:
 - master
+
+stages:
+  - stage: Build
+  - stage: Test
 
 pool:
   vmImage: ubuntu-latest
